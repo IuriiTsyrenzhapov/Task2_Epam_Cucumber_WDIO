@@ -41,7 +41,8 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 2,
+  specFileRetries: 2,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -51,7 +52,21 @@ exports.config = {
     {
       browserName: 'chrome',
       browserVersion: '120',
+      // 'goog:chromeOptions': {
+      //   args: ['--headless'],
+      // },
     },
+
+    // {
+    //   browserName: 'firefox',
+    //   'moz:firefoxOptions': {
+    //     args: ['-headless'],
+    //   },
+    // },
+
+    // {
+    //   browserName: 'safari',
+    // },
   ],
 
   //

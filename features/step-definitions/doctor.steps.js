@@ -65,6 +65,7 @@ Then(/^the new doctor should be added successfully$/, async () => {
   const expectTitle =
     'Appointment Planner - Syncfusion Angular Components Showcase App';
   await expect(browser).toHaveTitle(expectTitle);
+  await browser.pause(6000);
 });
 Given(/^on the patients page$/, async () => {
   await browser.url(

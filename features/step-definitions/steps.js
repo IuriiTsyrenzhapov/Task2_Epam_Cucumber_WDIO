@@ -13,9 +13,12 @@ Given(/^the user is on the (\w+) page$/, async (page) => {
 
 When(/^the user enter valid (.+) and (.+)$/, async (username, password) => {
   await LoginPage.login(username, password);
+
+  await browser.pause(6000);
 });
 
 Then(/^Page title should be "My Dashboard \| Syncfusion"$/, async () => {
   const expectedTitle = 'My Dashboard | Syncfusion';
   await expect(browser).toHaveTitle(expectedTitle);
+  await browser.pause(6000);
 });
