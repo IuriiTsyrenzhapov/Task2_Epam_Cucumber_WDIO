@@ -1,5 +1,5 @@
 const { $ } = require('@wdio/globals');
-const Page = require('./page');
+const Page = require('./base.page');
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -35,7 +35,7 @@ class DoctorsPage extends Page {
 
   async open() {
     await super.open(
-      'https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/doctors'
+      'doctors'
     );
   }
 }

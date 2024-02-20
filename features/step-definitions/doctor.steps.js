@@ -1,12 +1,30 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 const { expect, $ } = require('@wdio/globals');
 
-const DoctorsPage = require('../pageobjects/doctor.page');
+const basePage = require('../pageobjects/base.page');
+const doctorsPage = require('../pageobjects/doctors.page');
+const patientsPage = require('../pageobjects/patients.page');
+const calendarPage = require('../pageobjects/calendar.page');
+const {elementToBeEnabled} = require("wdio-wait-for");
 
+const pages = {
+  login: basePage,
+  doctors: doctorsPage,
+  patients: patientsPage,
+  calendar: calendarPage,
+};
+
+
+/*
 Given(/^User on the doctors page$/, async () => {
   await browser.url(
     'https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/doctors'
   );
+});
+*/
+
+Given(/^User on the (\w+) page$/, async (page) => {
+  await pages[page].open();
 });
 
 When(/^they search for a doctor named "Nembo Lukeni"$/, async () => {
@@ -74,8 +92,10 @@ Given(/^on the patients page$/, async () => {
   await browser.pause(3000);
 });
 When(/^they search for a patient$/, async () => {
+
   const patientName = $('span.patient-name*=Laura');
-  patientName.click();
+  //await elementToBeEnabled(patientName);
+  await patientName.click();
   await browser.pause(6000);
 });
 When(/^edit the symptom$/, async () => {
@@ -105,20 +125,21 @@ Given(/^doctor on page$/, async () => {
   await browser.pause(3000);
 });
 
-When(/^doctor search for a patient named "Adams"$/, async () => {
-  const patientName = $('span.patient-name*=Adams');
-  patientName.click();
+When(/^doctor search for a patient named (\w+)$/, async (patient) => {
+  const patientName = $(`span.patient-name*=${patient}`);
+  await patientName.click();
+  await browser.pause(6000);
 });
 
 Then(/^should see the details of the patient named "Adams"$/, async () => {
-  const element = await $('div#grid_1627125836_1_dialogEdit_wrapper_title');
-  const text = await element.getText();
+  const element = await $('div#grid_1627125836_1_dialogEdit_wrapper');
+  const text = element.getText();
   await expect(text).toContain('Patient Details');
   await browser.pause(6000);
 });
 Given(/^calendar page$/, async () => {
   await browser.url(
-    'https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/calendar'
+    `https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/${page}`
   );
   await browser.pause(3000);
 });
