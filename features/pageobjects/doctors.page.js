@@ -1,42 +1,40 @@
-const { $ } = require('@wdio/globals');
-const Page = require('./base.page');
+const BasePage = require('./base.page');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
-class DoctorsPage extends Page {
-  get searchInput() {
-    return $('#search-input');
-  }
-  get searchButton() {
-    return $('#search-button');
-  }
-  get editPhoneNumberButton() {
-    return $('#edit-phone-number-button');
-  }
-  get phoneNumberInput() {
-    return $('#phone-number-input');
-  }
-  get saveButton() {
-    return $('#save-button');
-  }
+class DoctorsPage extends BasePage {
+  async searchForDoctor(name) {
+    await $('div.doctors').click();
 
-  async searchDoctor(doctorName) {
-    await this.searchInput.setValue(doctorName);
-    await this.searchButton.click();
+    const specialistElement = await $(`#Specialist_1`);
+    await specialistElement.click();
   }
 
   async editPhoneNumber(newPhoneNumber) {
-    await this.editPhoneNumberButton.click();
-    await this.phoneNumberInput.clearValue();
-    await this.phoneNumberInput.setValue(newPhoneNumber);
-    await this.saveButton.click();
+    await $("//button[text()='Edit']").click();
+
+    const mobileNumberInput = await $('input#DoctorMobile');
+    await mobileNumberInput.clearValue();
+    await mobileNumberInput.setValue(newPhoneNumber);
+
+    const saveButton = await $("//button[text()='Save']");
+    await saveButton.click();
   }
 
-  async open() {
-    await super.open(
-      'doctors'
-    );
+  async clickAddDoctorButton() {
+    await $("//button[text()='Add New Doctor']").click();
+    await browser.pause(6000);
+  }
+
+  async fillDoctorDetails(name, email, education, mobile) {
+    await $("input[name='Name']").setValue(name);
+    await $("input[name='Email']").setValue(email);
+    await $("input[name='Education']").setValue(education);
+    await $("input[name='Mobile']").setValue(mobile);
+    await browser.pause(6000);
+  }
+
+  async submitForm() {
+    await $("//button[text()='Save']").click();
+    await browser.pause(6000);
   }
 }
 

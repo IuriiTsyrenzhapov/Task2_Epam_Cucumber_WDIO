@@ -21,10 +21,10 @@ When doctor search for a patient named Laura
 And edit the symptom
 Then the patient's email should be updated successfully
 
-Scenario: Find a patient named "Adams" on the patients page
+Scenario: Find a patient named Adams on the patients page
 Given User on the patients page
 When doctor search for a patient named Adams
-Then should see the details of the patient named "Adams"
+Then should see the details of the patient named Adams
 
 Scenario: Change patient's name in the calendar
 Given User on the calendar page
